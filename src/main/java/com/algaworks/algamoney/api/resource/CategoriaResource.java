@@ -2,6 +2,7 @@ package com.algaworks.algamoney.api.resource;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,10 +32,18 @@ public class CategoriaResource {
 	public List<Categoria> listar(){
 		return categoriaRepository.findAll();
 	}
-	
+	/*
+	Esta sugestão é bem parecida com a resolução da própria aula, porém ao invés de ficarmos checando 
+	manualmente de objeto é null ou não, o Optional nos dá algumas facilidades.
+
+	Neste caso utilizamos o método isPresent, que nada mais é que uma comparação “obj != null”, 
+	e finalizamos com um ternário, igual a resolução da aula.
+	*/
 	@GetMapping("/{codigo}")
-	public Categoria buscarPeloCodigo(@PathVariable Long codigo) {
-		return this.categoriaRepository.findById(codigo).orElse(null);
+	public ResponseEntity<Categoria> buscarPeloCodigo(@PathVariable Long codigo) {
+	    Optional<Categoria> categoria = this.categoriaRepository.findById(codigo);
+	    return categoria.isPresent() ? 
+	            ResponseEntity.ok(categoria.get()) : ResponseEntity.notFound().build();
 	}
 	
 	// RequestBody serve para criar uma nova categoria, caso ainda não tenha.
