@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,7 +50,8 @@ public class CategoriaResource {
 	// RequestBody serve para criar uma nova categoria, caso ainda não tenha.
 	@PostMapping
 	// @ResponseStatus(HttpStatus.CREATED) // STATUS 201: CREATED, como eu coloquei ResponseEntity, ele ja avisa o 201
-	public ResponseEntity<Categoria> criar(@RequestBody Categoria categoria, HttpServletResponse response) {
+	// @Valid ser para validar o NOTNULL da Classe CATEGORIA
+	public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria, HttpServletResponse response) {
 		Categoria categoriaSalva = categoriaRepository.save(categoria);
 		
 		// ServletUriComponentsBuilder é um helper do Spring
