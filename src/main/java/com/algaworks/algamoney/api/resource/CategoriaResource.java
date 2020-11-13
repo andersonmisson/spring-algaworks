@@ -54,7 +54,7 @@ public class CategoriaResource {
 	
 	// RequestBody serve para criar uma nova categoria, caso ainda não tenha.
 	@PostMapping
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_CATEGORIA') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_CATEGORIA') and #oauth2.hasScope('write')")
 	// @ResponseStatus(HttpStatus.CREATED) // STATUS 201: CREATED, como eu coloquei ResponseEntity, ele ja avisa o 201
 	// @Valid ser para validar o NOTNULL da Classe CATEGORIA
 	public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria, HttpServletResponse response) {
