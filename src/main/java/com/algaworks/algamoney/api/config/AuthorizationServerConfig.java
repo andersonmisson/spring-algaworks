@@ -26,12 +26,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory() // Está gravado em memoria, mas pode ser por JDBC (banco de dados)
-			.withClient("angular") // nome do usuario
-			.secret("$2a$10$G1j5Rf8aEEiGc/AET9BA..xRR.qCpOUzBZoJd8ygbGy6tb3jsMT9G") // senha
-			.scopes("read", "write") // Escopo LER e GRAVAR
-			.authorizedGrantTypes("password", "refresh_token") // Modo de tokens para usuario, sinceramente nao entendi essa parte
-			.accessTokenValiditySeconds(1800) // Quantos segundos esse Token ficara ativo. 1800/60 = 30 min
-			.refreshTokenValiditySeconds(3600 * 24);
+				.withClient("angular") // nome do usuario
+				.secret("$2a$10$G1j5Rf8aEEiGc/AET9BA..xRR.qCpOUzBZoJd8ygbGy6tb3jsMT9G") // senha
+				.scopes("read", "write") // Escopo LER e GRAVAR
+				.authorizedGrantTypes("password", "refresh_token") // Modo de tokens para usuario, sinceramente nao entendi essa parte
+				.accessTokenValiditySeconds(1800) // Quantos segundos esse Token ficara ativo. 1800/60 = 30 min
+				.refreshTokenValiditySeconds(3600 * 24)
+			.and()
+				.withClient("mobile") // nome do usuario
+				.secret("m0b1l30") // senha
+				.scopes("read") // Escopo somente LER
+				.authorizedGrantTypes("password", "refresh_token") // Modo de tokens para usuario, sinceramente nao entendi essa parte
+				.accessTokenValiditySeconds(1800) // Quantos segundos esse Token ficara ativo. 1800/60 = 30 min
+				.refreshTokenValiditySeconds(3600 * 24);
 	}
 	
 	@Override
