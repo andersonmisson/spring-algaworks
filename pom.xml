@@ -54,6 +54,7 @@
 		<dependency>
   			<groupId>org.hibernate</groupId>
   			<artifactId>hibernate-jpamodelgen</artifactId>
+  			
 		</dependency>
 		
 		<!-- Suporte do Jackson para as datas do Java 8-->
