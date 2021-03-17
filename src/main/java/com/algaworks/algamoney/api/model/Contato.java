@@ -1,53 +1,38 @@
 package com.algaworks.algamoney.api.model;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "Pessoa")
-public class Pessoa {
+@Table(name = "contato")
+public class Contato {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	
-	@NotNull
+	@NotEmpty
 	private String nome;
 	
-	@Embedded
-	private Endereco endereco;
+	@Email
+	@NotNull
+	private String email;
+	
+	@NotEmpty
+	private String telefone;
 	
 	@NotNull
-	private boolean ativo;
-	
-	@Valid
-	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
-	private List<Contato> contatos;
-	
-	public List<Contato> getContatos() {
-		return contatos;
-	}
-
-	public void setContatos(List<Contato> contatos) {
-		this.contatos = contatos;
-	}
-
-	public Pessoa() {
-		
-	}
+	@ManyToOne
+	@JoinColumn(name = "codigo_pessoa")
+	private Pessoa pessoa;
 
 	public Long getCodigo() {
 		return codigo;
@@ -65,26 +50,28 @@ public class Pessoa {
 		this.nome = nome;
 	}
 
-	public Endereco getEndereco() {
-		return endereco;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
-	
-	public boolean isAtivo() {
-		return ativo;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
+	public String getTelefone() {
+		return telefone;
 	}
-	
-	@JsonIgnore // Para que o Json não crie uma propriedade chamada isInativo
-	@Transient // Para que o Hibernate não pense que isso é uma propriedade
-	public boolean isInativo() {
-		return !this.ativo;
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
 	@Override
@@ -103,7 +90,7 @@ public class Pessoa {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pessoa other = (Pessoa) obj;
+		Contato other = (Contato) obj;
 		if (codigo == null) {
 			if (other.codigo != null)
 				return false;
@@ -111,7 +98,4 @@ public class Pessoa {
 			return false;
 		return true;
 	}
-	
-	
-
 }
