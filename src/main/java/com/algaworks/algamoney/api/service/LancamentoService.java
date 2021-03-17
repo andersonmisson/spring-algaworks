@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.algaworks.algamoney.api.dto.LancamentoEstatisticaPessoa;
@@ -33,6 +34,12 @@ public class LancamentoService {
 
 	@Autowired
 	private LancamentoRepository lancamentoRepository;
+	
+	// Se usar fixedDelay. Se tiver um atraso no tempo, pode dar problema. Pode dar problema de performace
+	@Scheduled(cron = "0 0 6 * * *") // 0seg 0min 6h ou seja, as 6 da manha, * dia do mes * mês * dia da semana
+	public void avisarSobreLancamentosVencidos() {
+		System.out.println(">>>>>>>>>>>>>>> Método sendo executado...");
+	}
 	
 	public byte[] relatorioPorPessoa(LocalDate inicio, LocalDate fim) throws Exception {
 		List<LancamentoEstatisticaPessoa> dados = lancamentoRepository.porPessoa(inicio, fim);
