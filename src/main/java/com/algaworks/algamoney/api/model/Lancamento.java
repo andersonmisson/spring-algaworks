@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 //import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -56,7 +58,10 @@ public class Lancamento {
 	@JoinColumn(name = "codigo_pessoa")
 	private Pessoa pessoa;
 	
-	
+	@JsonIgnore
+	public boolean isReceita() {
+		return TipoLancamento.RECEITA.equals(this.tipo);
+	}
 
 	public Long getCodigo() {
 		return codigo;
