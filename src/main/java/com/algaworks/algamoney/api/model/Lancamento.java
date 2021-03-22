@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 //import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -53,6 +54,7 @@ public class Lancamento {
 	@JoinColumn(name = "codigo_categoria")
 	private Categoria categoria;
 	
+	@JsonIgnoreProperties("contatos") // Para não ir junto a informação de contatos na busca
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "codigo_pessoa")
