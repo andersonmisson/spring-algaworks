@@ -28,9 +28,11 @@ public class PessoaService {
 		  Pessoa pessoaSalva = this.pessoaRepository.findById(codigo)
 		      .orElseThrow(() -> new EmptyResultDataAccessException(1));
 		  
-		  pessoa.getContatos().forEach(c -> c.setPessoa(pessoa));
+		  pessoaSalva.getContatos().clear();
+		  pessoaSalva.getContatos().addAll(pessoa.getContatos());
+		  pessoaSalva.getContatos().forEach(c -> c.setPessoa(pessoaSalva));
 
-		  BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo");
+		  BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo", "contatos"); // Para ignorar
 
 		  return this.pessoaRepository.save(pessoaSalva);
 		}
