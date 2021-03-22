@@ -18,10 +18,17 @@ public class PessoaService {
 	@Autowired
 	private PessoaRepository pessoaRepository;
 	
+	public Pessoa salvar(Pessoa pessoa) {
+		pessoa.getContatos().forEach(c -> c.setPessoa(pessoa));
+		return pessoaRepository.save(pessoa);
+	}
+	
 	public Pessoa atualizar(@PathVariable Long codigo, @RequestBody Pessoa pessoa) {
 
 		  Pessoa pessoaSalva = this.pessoaRepository.findById(codigo)
 		      .orElseThrow(() -> new EmptyResultDataAccessException(1));
+		  
+		  pessoa.getContatos().forEach(c -> c.setPessoa(pessoa));
 
 		  BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo");
 
