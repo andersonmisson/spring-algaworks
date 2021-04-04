@@ -4,25 +4,27 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "cidade")
 public class Cidade {
-
+	
 	@Id
-	private Long Id;
+	private Long codigo;
 	
 	private String nome;
 	
 	@ManyToOne
-	@JoinColumn(name="codigo_estado")
+	@JoinColumn(name = "codigo_estado")
 	private Estado estado;
 
-	public Long getId() {
-		return Id;
+	public Long getCodigo() {
+		return codigo;
 	}
 
-	public void setId(Long id) {
-		Id = id;
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getNome() {
@@ -32,11 +34,11 @@ public class Cidade {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	
 	public Estado getEstado() {
 		return estado;
 	}
-
+	
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
@@ -45,7 +47,7 @@ public class Cidade {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Id == null) ? 0 : Id.hashCode());
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		return result;
 	}
 
@@ -58,13 +60,11 @@ public class Cidade {
 		if (getClass() != obj.getClass())
 			return false;
 		Cidade other = (Cidade) obj;
-		if (Id == null) {
-			if (other.Id != null)
+		if (codigo == null) {
+			if (other.codigo != null)
 				return false;
-		} else if (!Id.equals(other.Id))
+		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
 	}
-	
-	
 }
